@@ -31,7 +31,27 @@
                 .then(data => {
                     data.forEach(todo => {
                         const li = document.createElement('li');
-                        li.textContent = `ID: ${todo.id}, Name: ${todo.name}, Description: ${todo.description}`;
+                        li.textContent = `ID: ${todo.id}, Name: ${todo.name}, Description: ${todo.description} `;
+
+                        // ✅ Add delete button
+                        const delBtn = document.createElement('button');
+                        delBtn.textContent = "Delete";
+                        delBtn.style.marginLeft = "10px";
+                        delBtn.onclick = function() {
+                            fetch(`http://127.0.0.1:8000/delete_todo/${todo.id}`, {
+                                method: 'DELETE'
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                alert(data.message);
+                                loadTodos(); // reload after delete
+                            })
+                            .catch(error => {
+                                console.error('Error deleting todo:', error);
+                            });
+                        };
+
+                        li.appendChild(delBtn);
                         list.appendChild(li);
                     });
                 })

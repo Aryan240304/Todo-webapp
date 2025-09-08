@@ -29,3 +29,10 @@ def show_todos():
 def create_todo(todo: Todo):
     todos.append(todo)
     return {"message": "Todo created successfully"}
+
+
+@app.delete("/delete_todo/{id}")
+def delete_todo(id: int):
+    global todos
+    todos = [todo for todo in todos if todo.id != id]
+    return {"message": "Todo deleted successfully"}
