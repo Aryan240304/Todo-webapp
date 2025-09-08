@@ -36,3 +36,11 @@ def delete_todo(id: int):
     global todos
     todos = [todo for todo in todos if todo.id != id]
     return {"message": "Todo deleted successfully"}
+
+@app.put("/update_todo/{id}")
+def update_todo(id: int, updated_todo: Todo):
+    for index, todo in enumerate(todos):
+        if todo.id == id:
+            todos[index] = updated_todo
+            return {"message": "Todo updated successfully"}
+    return {"message": "Todo not found"}
